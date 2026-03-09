@@ -1,6 +1,7 @@
 package com.santi.AhorcadoApi.repository;
 
 import com.santi.AhorcadoApi.model.Jugador;
+import com.santi.AhorcadoApi.model.Palabras;
 import com.santi.AhorcadoApi.model.Partida;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;

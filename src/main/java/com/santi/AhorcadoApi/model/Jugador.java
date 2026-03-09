@@ -6,8 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "jugador")
 public class Jugador {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    @Column(unique = true, nullable = false)
     String nombre;
     int puntos;
     int rachaActual;
@@ -15,10 +14,6 @@ public class Jugador {
 
 
     public Jugador() {}
-
-    public Long getId() { return this.id; }
-    public void setId(long id) { this.id=id; }
-
 
     public String getNombre() { return this.nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }

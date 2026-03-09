@@ -24,18 +24,13 @@ public class JugadorController {
         return repository.findAll();
     }
 
-    // GET /jugadores/{id} → trae un jugador por su ID
-    @GetMapping("/{id}")
-    public Jugador obtenerPorId(@PathVariable Long id) {
-        return repository.findById(id)
+    // GET /jugadores/{id} → trae un jugador por su nombre de usuario unico para cada uno
+    @GetMapping("/{nombre}")
+    public Jugador obtenerPorId(@PathVariable String nombre) {
+        return repository.findByNombre(nombre)
                 .orElseThrow(() -> new RuntimeException("Jugador no encontrado"));
     }
 
-    // GET /jugadores/nombre/{nombre} → busca un jugador por su nombre
-    @GetMapping("/nombre/{nombre}")
-    public Jugador obtenerPorNombre(@PathVariable String nombre) {
-        return repository.findByNombre(nombre);
-    }
 
     @PostMapping
     public Jugador crear(@RequestBody Jugador jugador) {
@@ -47,10 +42,10 @@ public class JugadorController {
 
 
     @PutMapping("/{id}")
-    public Jugador actualizar(@PathVariable Long id, @RequestBody Jugador jugador) {
-        repository.findById(id)
+    public Jugador actualizar(@PathVariable String nombre, @RequestBody Jugador jugador) {
+        repository.findByNombre(nombre)
                 .orElseThrow(() -> new RuntimeException("Jugador no encontrado"));
-        jugador.setId(id);
+        jugador.setNombre(nombre);
         return repository.save(jugador);
     }
 }

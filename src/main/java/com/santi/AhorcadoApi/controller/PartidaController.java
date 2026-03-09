@@ -1,8 +1,6 @@
     package com.santi.AhorcadoApi.controller;
 
-
-    import com.santi.AhorcadoApi.repository.JugadorRepository;
-    import com.santi.AhorcadoApi.repository.PartidaRepository;
+    import com.santi.AhorcadoApi.repository.*;
     import com.santi.AhorcadoApi.model.Partida;
     import com.santi.AhorcadoApi.model.Jugador;
     import org.springframework.web.bind.annotation.*;
@@ -13,25 +11,32 @@
     public class PartidaController {
         private final PartidaRepository partidaRepository;
         private final JugadorRepository jugadorRepository;
+        private final PalabraRepository palabraRepository;
 
-        public PartidaController(PartidaRepository repository,JugadorRepository jugadorRepository) {
-            this.partidaRepository=repository;
-            this.jugadorRepository=jugadorRepository;}
+        public PartidaController(PartidaRepository partidaRepository,
+                                 JugadorRepository jugadorRepository,
+                                 PalabraRepository palabraRepository) {
+            this.partidaRepository = partidaRepository;
+            this.jugadorRepository = jugadorRepository;
+            this.palabraRepository = palabraRepository;
+        }
 
         @GetMapping
         public List<Partida> listar(){
             return partidaRepository.findAll();
         }
 
-        @GetMapping("/jugador/{jugadorId}")
-        public List<Partida> listarPorJugador(@PathVariable Long jugadorId) {
-            Jugador jugador = jugadorRepository.findById(jugadorId)
+        @GetMapping("/jugador/{jugadorNombre}")
+        public List<Partida> listarPorJugador(@PathVariable String jugadorNombre) {
+            Jugador jugador = jugadorRepository.findByNombre(jugadorNombre)
                     .orElseThrow(() -> new RuntimeException("Jugador no encontrado"));
             return partidaRepository.findByJugador(jugador);
         }
 
         @PostMapping
         public Partida guardar(@RequestBody Partida partida) {
+            palabraRepository.findById(partida.getPalabra().getId())
+                    .orElseThrow(() -> new RuntimeException("Palabra no encontrada"));
             return partidaRepository.save(partida);
         }
 
