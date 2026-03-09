@@ -1,0 +1,9 @@
+package com.santi.AhorcadoApi.repository;
+
+import com.santi.AhorcadoApi.model.Jugador;
+import com.santi.AhorcadoApi.model.Partida;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+public interface PartidaRepository extends JpaRepository<Partida,Long> {
+    List<Partida> findByJugador(Jugador jugador);
+}
