@@ -26,7 +26,7 @@
             return partidaRepository.findAll();
         }
 
-        @GetMapping("/jugador/{jugadorNombre}")
+        @GetMapping("/jugador/{jugador_nombre}")
         public List<Partida> listarPorJugador(@PathVariable String jugadorNombre) {
             Jugador jugador = jugadorRepository.findByNombre(jugadorNombre)
                     .orElseThrow(() -> new RuntimeException("Jugador no encontrado"));

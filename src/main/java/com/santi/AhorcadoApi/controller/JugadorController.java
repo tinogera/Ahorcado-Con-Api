@@ -3,9 +3,12 @@ package com.santi.AhorcadoApi.controller;
 import com.santi.AhorcadoApi.model.Jugador;
 import com.santi.AhorcadoApi.model.Palabras;
 import com.santi.AhorcadoApi.repository.PalabraRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import com.santi.AhorcadoApi.controller.JugadorController;
 import com.santi.AhorcadoApi.repository.JugadorRepository;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 
 @RestController
@@ -26,9 +29,9 @@ public class JugadorController {
 
     // GET /jugadores/{id} → trae un jugador por su nombre de usuario unico para cada uno
     @GetMapping("/{nombre}")
-    public Jugador obtenerPorId(@PathVariable String nombre) {
+    public Jugador buscarJugador(@PathVariable String nombre) {
         return repository.findByNombre(nombre)
-                .orElseThrow(() -> new RuntimeException("Jugador no encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Jugador no encontrado"));
     }
 
 
@@ -41,7 +44,7 @@ public class JugadorController {
     }
 
 
-    @PutMapping("/{id}")
+    @PutMapping("/{nombre}")
     public Jugador actualizar(@PathVariable String nombre, @RequestBody Jugador jugador) {
         repository.findByNombre(nombre)
                 .orElseThrow(() -> new RuntimeException("Jugador no encontrado"));

@@ -12,7 +12,6 @@ public class Jugador {
     int rachaActual;
     int mayorRacha;
 
-
     public Jugador() {}
 
     public String getNombre() { return this.nombre; }
